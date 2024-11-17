@@ -1,0 +1,51 @@
+---
+title: "DATA607Assignment9"
+author: "Erick Hadi"
+date: "2024-11-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Assignment 9 
+
+The New York Times web site provides a rich set of APIs, as described here: https://developer.nytimes.com/apis
+You’ll need to start by signing up for an API key.
+Your task is to choose one of the New York Times APIs, construct an interface in R to read in the JSON data, and
+transform it into an R DataFrame.
+
+
+## Data Acquisition
+
+I am pulling the Top Stories from
+```{r, message=FALSE}
+library(httr)
+source("secret")
+base_url <- "https://api.nytimes.com/svc/topstories/v2/automobiles.json"
+url <- paste0(base_url, "?api-key=", NYT_API_KEY)
+response <- GET(url)
+```
+
+
+## Data Transformation
+
+```{r}
+library(jsonlite)
+json <- fromJSON(content(response, as = "text"))
+NYT_Top_Stories <- data.frame( json$results )
+```
+
+
+## Data Results
+
+```{r, message=FALSE}
+library(kableExtra)
+library(dplyr)
+NYT_Top_Stories %>%
+                kable() %>%
+                kable_styling(bootstrap_options = c("striped", "hover", "responsive"))
+```
+
+

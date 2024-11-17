@@ -1398,17 +1398,16 @@ transform it into an R DataFrame.</p>
 <h2>Data Acquisition</h2>
 <p>I am pulling the Top Stories from</p>
 <pre class="r"><code>library(httr)
-source(&quot;secret&quot;)
+source(&quot;../secret&quot;)
 base_url &lt;- &quot;https://api.nytimes.com/svc/topstories/v2/automobiles.json&quot;
 url &lt;- paste0(base_url, &quot;?api-key=&quot;, NYT_API_KEY)
-response &lt;- GET(url)</code></pre>
+NYT_Data &lt;- GET(url)</code></pre>
 </div>
 <div id="data-transformation" class="section level2">
 <h2>Data Transformation</h2>
 <pre class="r"><code>library(jsonlite)
-json &lt;- fromJSON(content(response, as = &quot;text&quot;))</code></pre>
-<pre><code>## No encoding supplied: defaulting to UTF-8.</code></pre>
-<pre class="r"><code>NYT_Top_Stories &lt;- data.frame( json$results )</code></pre>
+json &lt;- fromJSON(content(NYT_Data, as = &quot;text&quot;))
+NYT_Top_Stories &lt;- data.frame( json$results )</code></pre>
 </div>
 <div id="data-results" class="section level2">
 <h2>Data Results</h2>

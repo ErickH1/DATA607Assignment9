@@ -22,18 +22,18 @@ transform it into an R DataFrame.
 I am pulling the Top Stories from
 ```{r, message=FALSE}
 library(httr)
-source("secret")
+source("../secret")
 base_url <- "https://api.nytimes.com/svc/topstories/v2/automobiles.json"
 url <- paste0(base_url, "?api-key=", NYT_API_KEY)
-response <- GET(url)
+NYT_Data <- GET(url)
 ```
 
 
 ## Data Transformation
 
-```{r}
+```{r, message=FALSE}
 library(jsonlite)
-json <- fromJSON(content(response, as = "text"))
+json <- fromJSON(content(NYT_Data, as = "text"))
 NYT_Top_Stories <- data.frame( json$results )
 ```
 
